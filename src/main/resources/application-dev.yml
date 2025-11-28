@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medxpress_db
+    username: ${MEDXPRESS_DEV_DB_USER:lino}
+    password: ${MEDXPRESS_DEV_DB_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-dev.yaml
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

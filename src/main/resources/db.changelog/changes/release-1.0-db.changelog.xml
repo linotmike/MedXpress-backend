@@ -8,8 +8,8 @@
 
     <changeSet id="release-1.0-create-tables" author="medxpress">
         <sqlFile
-                path="release-1.0/create-tables.sql"
-                relativeToChangelogFile="true"
+                path="classpath:/db.changelog/changes/release-1.0/create-tables.sql"
+                relativeToChangelogFile="false"
                 endDelimiter=";"
                 stripComments="true"
                 splitStatements="true"/>

@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 
   liquibase:
@@ -19,6 +19,7 @@ server:
 
 logging:
   level:
+    liquibase: DEBUG
     root: INFO
 
 springdoc:

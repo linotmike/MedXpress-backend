@@ -12,7 +12,7 @@ spring:
 
   liquibase:
     enabled: false
-    change-log: classpath:/db/changelog/changelog-prod.yaml
+    change-log: classpath:/db.changelog/changelog-prod.yaml
 
 server:
   port: 8080

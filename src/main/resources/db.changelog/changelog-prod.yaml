@@ -1,4 +1,4 @@
 databaseChangeLog:
   - include:
       relativeToChangelogFile: true
-      file: classpath:/db.changelog/changes/release-1.0-db.changelog.xml
+      file: changes/release-1.0-db.changelog.xml

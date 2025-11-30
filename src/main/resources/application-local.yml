@@ -2,6 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/medxpress_db
     username: lino
+    password: ""
     driver-class-name: org.postgresql.Driver
 
   data:

@@ -68,4 +68,14 @@ public class PharmacyController {
         return pharmacyService.suspend(pharmacyId);
     }
 
+    @GetMapping("/nearby")
+    public List<PharmacyResponse> nearby(
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam double radiusKm
+    ) {
+        return pharmacyService.searchNearby(lat, lng, radiusKm);
+    }
+
+
 }

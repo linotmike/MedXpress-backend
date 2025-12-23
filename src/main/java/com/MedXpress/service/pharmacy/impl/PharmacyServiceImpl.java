@@ -152,4 +152,36 @@ public class PharmacyServiceImpl implements PharmacyService {
         return PharmacyMapper.toResponse(p);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<PharmacyResponse> searchNearby(double latitude, double longitude, double radiusKm) {
+
+        if (radiusKm <= 0 || radiusKm > 50) {
+            throw new BusinessException("radiusKm must be between 0 and 50.");
+        }
+
+        // Only show APPROVED pharmacies to users
+        List<Pharmacy> approved = pharmacyRepository.findByStatus(PharmacyStatus.APPROVED);
+
+        return approved.stream()
+                .filter(p -> p.getLatitude() != null && p.getLongitude() != null)
+                .filter(p -> distanceKm(latitude, longitude, p.getLatitude(), p.getLongitude()) <= radiusKm)
+                .map(PharmacyMapper::toResponse)
+                .toList();
+    }
+
+    private double distanceKm(double lat1, double lon1, double lat2, double lon2) {
+        final double R = 6371.0; // Earth radius in km
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+
 }

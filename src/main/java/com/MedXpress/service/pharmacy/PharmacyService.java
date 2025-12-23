@@ -26,4 +26,7 @@ public interface PharmacyService {
 
     PharmacyResponse suspend(UUID pharmacyId);
 
+    List<PharmacyResponse> searchNearby(double latitude, double longitude, double radiusKm);
+
+
 }

@@ -104,4 +104,52 @@ public class PharmacyServiceImpl implements PharmacyService {
         p.setStatus(ps);
         return PharmacyMapper.toResponse(p);
     }
+
+    @Override
+    public PharmacyResponse approve(UUID pharmacyId) {
+        Pharmacy p = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new NotFoundException("Pharmacy not found."));
+
+        if (p.getStatus() == PharmacyStatus.APPROVED) {
+            return PharmacyMapper.toResponse(p);
+        }
+
+        if (p.getStatus() == PharmacyStatus.SUSPENDED) {
+            throw new BusinessException("Suspended pharmacies cannot be approved directly.");
+        }
+
+        p.setStatus(PharmacyStatus.APPROVED);
+        return PharmacyMapper.toResponse(p);
+    }
+
+    @Override
+    public PharmacyResponse reject(UUID pharmacyId) {
+        Pharmacy p = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new NotFoundException("Pharmacy not found."));
+
+        if (p.getStatus() == PharmacyStatus.REJECTED) {
+            return PharmacyMapper.toResponse(p);
+        }
+
+        if (p.getStatus() == PharmacyStatus.APPROVED) {
+            throw new BusinessException("Approved pharmacies cannot be rejected. Suspend instead.");
+        }
+
+        p.setStatus(PharmacyStatus.REJECTED);
+        return PharmacyMapper.toResponse(p);
+    }
+
+    @Override
+    public PharmacyResponse suspend(UUID pharmacyId) {
+        Pharmacy p = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new NotFoundException("Pharmacy not found."));
+
+        if (p.getStatus() == PharmacyStatus.SUSPENDED) {
+            return PharmacyMapper.toResponse(p);
+        }
+
+        p.setStatus(PharmacyStatus.SUSPENDED);
+        return PharmacyMapper.toResponse(p);
+    }
+
 }

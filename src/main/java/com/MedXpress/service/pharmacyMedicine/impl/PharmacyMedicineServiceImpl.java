@@ -12,6 +12,7 @@ import com.MedXpress.repository.MedicineRepository;
 import com.MedXpress.repository.PharmacyMedicineRepository;
 import com.MedXpress.repository.PharmacyRepository;
 import com.MedXpress.service.pharmacyMedicine.PharmacyMedicineService;
+import com.MedXpress.util.PharmacyStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,10 @@ public class PharmacyMedicineServiceImpl implements PharmacyMedicineService {
 
         Pharmacy pharmacy = pharmacyRepository.findById(request.getPharmacyId())
                 .orElseThrow(() -> new NotFoundException("Pharmacy not found."));
+
+        if (pharmacy.getStatus() !=  PharmacyStatus.APPROVED) {
+            throw new BusinessException("Pharmacy must be APPROVED to manage inventory.");
+        }
 
         Medicine medicine = medicineRepository.findById(request.getMedicineId())
                 .orElseThrow(() -> new NotFoundException("Medicine not found."));

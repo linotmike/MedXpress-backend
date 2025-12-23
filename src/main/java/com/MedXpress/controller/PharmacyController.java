@@ -52,4 +52,20 @@ public class PharmacyController {
     ) {
         return pharmacyService.updateStatus(pharmacyId, status);
     }
+
+    @PatchMapping("/{pharmacyId}/approve")
+    public PharmacyResponse approve(@PathVariable UUID pharmacyId) {
+        return pharmacyService.approve(pharmacyId);
+    }
+
+    @PatchMapping("/{pharmacyId}/reject")
+    public PharmacyResponse reject(@PathVariable UUID pharmacyId) {
+        return pharmacyService.reject(pharmacyId);
+    }
+
+    @PatchMapping("/{pharmacyId}/suspend")
+    public PharmacyResponse suspend(@PathVariable UUID pharmacyId) {
+        return pharmacyService.suspend(pharmacyId);
+    }
+
 }

@@ -19,4 +19,11 @@ public interface PharmacyService {
     List<PharmacyResponse> listByStatus(String status);
 
     PharmacyResponse updateStatus(UUID pharmacyId, String status);
+
+    PharmacyResponse approve(UUID pharmacyId);
+
+    PharmacyResponse reject(UUID pharmacyId);
+
+    PharmacyResponse suspend(UUID pharmacyId);
+
 }
